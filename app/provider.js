@@ -1,18 +1,22 @@
-"use client";
-import { ScreenSizeContext } from '@/context/ScreenSizeContext';
-import React, { useContext, useState } from 'react'
+"use client"
+import React, { createContext, useContext, useState } from 'react';
 
-function provider({children}) {
-    const [screenSize, setScreenSize] = useState('desktop');
+const ScreenSizeContext = createContext();
+
+export function ScreenSizeProvider({ children }) {
+  const [screenSize, setScreenSize] = useState('desktop');
+
   return (
-    <ScreenSizeContext.Provider value={{screenSize, setScreenSize}}>
-        {children}
+    <ScreenSizeContext.Provider value={{ screenSize, setScreenSize }}>
+      {children}
     </ScreenSizeContext.Provider>
-  )
+  );
 }
 
-export default provider;
-
-export const useScreenSize = () => {
-   return useContext(ScreenSizeContext);
+export function useScreenSize() {
+  const context = useContext(ScreenSizeContext);
+  if (context === undefined) {
+    throw new Error('useScreenSize must be used within a ScreenSizeProvider');
+  }
+  return context;
 }
