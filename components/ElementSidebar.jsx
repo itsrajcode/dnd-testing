@@ -6,13 +6,22 @@ import Element from "@/Data/Element";
 import { useDragDropElementLayout } from "@/app/provider";
 
 function ElementSidebar() {
-  const { dragElementLayout, setDragElementLayout } = useDragDropElementLayout();
+  const { dragElementLayout, setDragElementLayout } =
+    useDragDropElementLayout();
   const onDragLayoutStart = (layout) => {
     setDragElementLayout({
       dragLayout: {
         ...layout,
-        id: Date.now()
-      }
+        id: Date.now(),
+      },
+    });
+  };
+  const onDragElementStart = (element) => {
+    setDragElementLayout({
+      dragElement: {
+        ...element,
+        id: Date.now(),
+      },
     });
   };
   return (
@@ -32,13 +41,13 @@ function ElementSidebar() {
 
       <h2 className="text-lg font-bold">Elements</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {Element.map((item, index) => (
+        {Element.map((element, index) => (
           <div
             key={index}
             draggable
-            onDragStart={(e) => onDragLayoutStart(item)}
+            onDragStart={() => onDragElementStart(element)}
           >
-            <ElementCard item={item} />
+            <ElementCard item={element} />
           </div>
         ))}
       </div>
