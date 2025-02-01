@@ -33,7 +33,11 @@ function ElementSidebar() {
       <h2 className="text-lg font-bold">Elements</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {Element.map((item, index) => (
-          <div key={index} draggable>
+          <div
+            key={index}
+            draggable
+            onDragStart={(e) => onDragLayoutStart(item)}
+          >
             <ElementCard item={item} />
           </div>
         ))}
